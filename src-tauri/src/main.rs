@@ -3,7 +3,12 @@
     windows_subsystem = "windows"
 )]
 
-use rand::{thread_rng, distributions::{Alphanumeric, DistString}};
+use std::iter;
+
+use rand::{thread_rng, Rng};
+
+const CHARSET: &[u8] =
+    b"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+/*-=";
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
@@ -12,10 +17,10 @@ fn greet(name: &str) -> String {
 }
 
 #[tauri::command]
-async fn generate(password_length: usize) -> Result<String, String> {
-    let password = Alphanumeric.sample_string(&mut thread_rng(), password_length);
-
-    Ok(password)
+async fn generate(password_length: usize) -> String {
+    iter::repeat_with(|| CHARSET[thread_rng().gen_range(0..CHARSET.len())] as char)
+        .take(password_length)
+        .collect()
 }
 
 fn main() {
