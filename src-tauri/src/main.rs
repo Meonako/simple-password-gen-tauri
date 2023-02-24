@@ -10,12 +10,6 @@ use rand::{thread_rng, Rng};
 const CHARSET: &[u8] =
     b"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+/*-=";
 
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
-
 #[tauri::command]
 fn generate(password_length: usize) -> String {
     iter::repeat_with(|| CHARSET[thread_rng().gen_range(0..CHARSET.len())] as char)
@@ -25,7 +19,7 @@ fn generate(password_length: usize) -> String {
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet, generate])
+        .invoke_handler(tauri::generate_handler![generate])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
