@@ -17,7 +17,7 @@ fn greet(name: &str) -> String {
 }
 
 #[tauri::command]
-async fn generate(password_length: usize) -> String {
+fn generate(password_length: usize) -> String {
     iter::repeat_with(|| CHARSET[thread_rng().gen_range(0..CHARSET.len())] as char)
         .take(password_length)
         .collect()
