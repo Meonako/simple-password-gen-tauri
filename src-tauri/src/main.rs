@@ -12,7 +12,7 @@ const CHARSET: &[u8] =
 
 #[tauri::command]
 fn generate(password_length: usize) -> String {
-    iter::repeat_with(|| CHARSET[thread_rng().gen_range(..CHARSET.len())] as char)
+    iter::repeat_with(|| CHARSET[thread_rng().gen_range(0..CHARSET.len())] as char)
         .take(password_length)
         .collect()
 }
