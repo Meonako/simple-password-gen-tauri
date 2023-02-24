@@ -21,7 +21,6 @@
             placeholder="Password goes here..."
             bind:value={password}
         />
-        <!-- <button on:click={greet}> Greet </button> -->
     </div>
     {#if generated}
         <p>Now try changing Password length to 100!</p>
